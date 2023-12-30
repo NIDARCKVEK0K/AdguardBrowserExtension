@@ -31,6 +31,7 @@ export const AnnoyancesConsent = observer(({
     isOpen,
     setIsOpen,
     onConfirm,
+    onCancel,
 }) => {
     const { settingsStore } = useContext(rootStore);
 
@@ -99,6 +100,7 @@ export const AnnoyancesConsent = observer(({
             isOpen={isOpen}
             setIsOpen={setIsOpen}
             onConfirm={onConfirm}
+            onCancel={onCancel}
             customConfirmTitle={reactTranslator.getMessage('options_filters_annoyances_consent_enable_button')}
             isConsent
         />

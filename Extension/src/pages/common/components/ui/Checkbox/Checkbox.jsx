@@ -32,6 +32,7 @@ const Checkbox = (props) => {
         value,
         className,
         disabled,
+        checkboxRef,
     } = props;
 
     const computedValue = inverted ? !value : value;
@@ -60,6 +61,7 @@ const Checkbox = (props) => {
                 className="checkbox__in"
                 tabIndex="0"
                 disabled={disabled}
+                ref={checkboxRef}
             />
             <label
                 htmlFor={id}

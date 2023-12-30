@@ -22,7 +22,11 @@ jsx-a11y/click-events-have-key-events,
 jsx-a11y/no-static-element-interactions
 */
 
-import React, { useContext, useState } from 'react';
+import React, {
+    useContext,
+    useState,
+    useRef,
+} from 'react';
 import { observer } from 'mobx-react';
 
 import cn from 'classnames';
@@ -96,6 +100,8 @@ const Filter = observer(({ filter }) => {
         tagsDetails = [],
     } = filter;
 
+    const checkboxRef = useRef(null);
+
     // Trusted tag can be only on custom filters,
     const tags = trusted
         ? [...tagsDetails, {
@@ -108,6 +114,11 @@ const Filter = observer(({ filter }) => {
     const handleAnnoyancesFilterConsentConfirm = async () => {
         await settingsStore.updateFilterSetting(filterId, true);
         await messenger.setConsentedFilters([filterId]);
+    };
+
+    const handleAnnoyancesFilterConsentCancel = async () => {
+        // force prev state of the switch if consent is not given
+        checkboxRef.current.click();
     };
 
     const handleFilterSwitch = async ({ id, data }) => {
@@ -236,12 +247,14 @@ const Filter = observer(({ filter }) => {
                                 label={name}
                                 value={!!enabled}
                                 handler={handleFilterSwitch}
+                                checkboxRef={checkboxRef}
                             />
                             {isOpenAnnoyancesFilterConsentModal && (
                                 <AnnoyancesConsent
                                     isOpen={isOpenAnnoyancesFilterConsentModal}
                                     setIsOpen={setIsOpenAnnoyancesFilterConsentModal}
                                     onConfirm={handleAnnoyancesFilterConsentConfirm}
+                                    onCancel={handleAnnoyancesFilterConsentCancel}
                                 />
                             )}
                         </div>

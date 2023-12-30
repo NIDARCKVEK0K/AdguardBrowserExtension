@@ -29,6 +29,7 @@ export const ConfirmModal = ({
     subtitle,
     isOpen,
     onConfirm,
+    onCancel,
     setIsOpen,
     customCancelTitle,
     customConfirmTitle,
@@ -54,11 +55,16 @@ export const ConfirmModal = ({
         onConfirm();
     };
 
+    const handleCancel = () => {
+        closeModal();
+        onCancel();
+    };
+
     return (
         <>
             <Modal
                 isOpen={isOpen}
-                onRequestClose={closeModal}
+                onRequestClose={handleCancel}
                 // reset default padding
                 style={{ content: { padding: 0 } }}
             >
@@ -68,7 +74,7 @@ export const ConfirmModal = ({
                             type="button"
                             className="button modal__close"
                             aria-label={reactTranslator.getMessage('close_button_title')}
-                            onClick={closeModal}
+                            onClick={handleCancel}
                         >
                             <Icon id="#cross" />
                         </button>
@@ -92,7 +98,7 @@ export const ConfirmModal = ({
                         <button
                             className="button button--m button--transparent modal__btn modal__btn--confirm"
                             type="button"
-                            onClick={closeModal}
+                            onClick={handleCancel}
                         >
                             {cancelTitle}
                         </button>
