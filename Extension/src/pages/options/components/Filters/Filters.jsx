@@ -101,6 +101,16 @@ const Filters = observer(() => {
         );
     };
 
+    const handleAnnoyancesFiltersGroupConsentCancel = async () => {
+        // eslint-disable-next-line max-len
+        const annoyancesGroupCheckboxSelector = `input[type="checkbox"][class="checkbox__in"][id="${AntibannerGroupsId.AnnoyancesFiltersGroupId}"]`;
+        // selecting the needed element in this way because of inability to use the ref for specific group
+        // TODO: reconsider this approach
+        const annoyancesGroupCheckbox = document.querySelector(annoyancesGroupCheckboxSelector);
+        // force prev state of the switch if consent is not given
+        annoyancesGroupCheckbox.click();
+    };
+
     const handleGroupSwitch = async ({ id, data }) => {
         const groupId = Number.parseInt(id, 10);
 
@@ -335,6 +345,7 @@ const Filters = observer(() => {
                     isOpen={isOpenAnnoyancesGroupConsentModal}
                     setIsOpen={setIsOpenAnnoyancesGroupConsentModal}
                     onConfirm={handleAnnoyancesFiltersGroupConsentConfirm}
+                    onCancel={handleAnnoyancesFiltersGroupConsentCancel}
                 />
             )}
         </SettingsSection>
